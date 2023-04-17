@@ -1,0 +1,35 @@
+[build-system]
+requires = [
+  "setuptools",
+  "wheel",
+  "twine",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nnhelper"
+version = "2022.04.17"
+authors = [
+  { name="yanbc", email="imyanbc@gmail.com" },
+]
+description = "A set of helpers for mlops"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dynamic = ["dependencies"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[project.scripts]
+info_onnx = "nnhelper.info_onnx:main"
+info_trt = "nnhelper.info_trt:main"
+list_trt_plugins = "nnhelper.list_trt_plugins:main"
+
+[project.urls]
+"Homepage" = "https://github.com/YanBC/nnhelper"
+"Bug Tracker" = "https://github.com/YanBC/nnhelper/issues"
