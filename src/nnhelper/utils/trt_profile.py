@@ -8,26 +8,25 @@ import pycuda.driver as cuda
 def load_engine(engine_file_path: str) -> trt.ICudaEngine:
     trt_logger = trt.Logger(trt.Logger.ERROR)
     # Force init TensorRT plugins
-    trt.init_libnvinfer_plugins(None, '')
-    with open(engine_file_path, "rb") as f, \
-            trt.Runtime(trt_logger) as runtime:
+    trt.init_libnvinfer_plugins(None, "")
+    with open(engine_file_path, "rb") as f, trt.Runtime(trt_logger) as runtime:
         engine = runtime.deserialize_cuda_engine(f.read())
     return engine
 
 
 def save_engine(engine_file_path: str, engine: trt.ICudaEngine):
-    with open(engine_file_path, 'wb') as f:
+    with open(engine_file_path, "wb") as f:
         f.write(engine.serialize())
 
 
 @dataclass
 class Binding:
-    idx: int                    # engine.get_binding_shape
-    name: str                   # engine.get_binding_shape
+    idx: int  # engine.get_binding_shape
+    name: str  # engine.get_binding_shape
     dtype: trt.DataType
     min_shape: Tuple[int]
     opt_shape: Tuple[int]
-    max_shape: Tuple[int]       # output binding only has max_shape
+    max_shape: Tuple[int]  # output binding only has max_shape
     isInput: bool
     isDynamic: bool
 
@@ -113,7 +112,9 @@ def get_profiles(engine: trt.ICudaEngine) -> List[Profile]:
         shape: trt.Dims = engine.get_binding_shape(binding_idx)
         shape: Tuple[int] = tuple(shape)
         if engine.binding_is_input(binding_idx):
-            min_shape, opt_shape, max_shape = engine.get_profile_shape(profile_idx, binding_idx)
+            min_shape, opt_shape, max_shape = engine.get_profile_shape(
+                profile_idx, binding_idx
+            )
             isInput = True
         else:
             min_shape = [-1]
@@ -122,14 +123,14 @@ def get_profiles(engine: trt.ICudaEngine) -> List[Profile]:
             isInput = False
 
         binding = Binding(
-                idx=binding_idx,
-                name=name,
-                dtype=dtype,
-                min_shape=min_shape,
-                opt_shape=opt_shape,
-                max_shape=max_shape,
-                isInput=isInput,
-                isDynamic=is_shape_dynamic(shape)
+            idx=binding_idx,
+            name=name,
+            dtype=dtype,
+            min_shape=min_shape,
+            opt_shape=opt_shape,
+            max_shape=max_shape,
+            isInput=isInput,
+            isDynamic=is_shape_dynamic(shape),
         )
 
         if isInput:

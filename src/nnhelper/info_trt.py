@@ -12,7 +12,9 @@ def get_engine_info(engine_path: str) -> str:
     name = engine.name
 
     default_profile = profiles[0]
-    num_bindings_per_profile = len(default_profile.inputs) + len(default_profile.outputs)
+    num_bindings_per_profile = len(default_profile.inputs) + len(
+        default_profile.outputs
+    )
     num_input_bindings = len(default_profile.inputs)
     num_output_bindings = len(default_profile.outputs)
     input_names = [b.name for b in default_profile.inputs]

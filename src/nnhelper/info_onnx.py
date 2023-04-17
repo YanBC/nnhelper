@@ -10,9 +10,7 @@ import onnx
 def get_dtype_map() -> dict:
     str_names = onnx.TensorProto.DataType.keys()
     int_values = onnx.TensorProto.DataType.values()
-    mapping = {
-        v: n for v, n in zip(int_values, str_names)
-    }
+    mapping = {v: n for v, n in zip(int_values, str_names)}
     return mapping
 
 
@@ -36,7 +34,7 @@ class ModelIO:
 
 def get_args():
     p = argparse.ArgumentParser()
-    p.add_argument('onnx_file', help="Path to onnx file")
+    p.add_argument("onnx_file", help="Path to onnx file")
     return p.parse_args()
 
 
@@ -60,7 +58,7 @@ def get_onnx_info(model: onnx.ModelProto) -> str:
         io_shape = parse_TensorShapeProto(output_io.type.tensor_type.shape)
         model_outputs.append(ModelIO(io_name, io_dtype, io_shape))
 
-    ret_str = ''
+    ret_str = ""
     ret_str += f"Model Name: {graph_name}\n"
     ret_str += f"Opset version: {opset_version}\n"
     ret_str += f"Number of inputs: {len(model_inputs)}\n"
