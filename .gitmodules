@@ -1,0 +1,4 @@
+[submodule "src/third-parties/argparse"]
+	path = src/third-parties/argparse
+	url = https://github.com/cofyc/argparse.git
+	branch = v1.1.0
