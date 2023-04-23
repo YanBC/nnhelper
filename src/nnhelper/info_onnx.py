@@ -4,6 +4,7 @@
 import argparse
 from dataclasses import dataclass
 from typing import Tuple
+
 import onnx
 
 

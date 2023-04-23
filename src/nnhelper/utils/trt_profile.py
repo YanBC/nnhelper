@@ -1,8 +1,9 @@
 from dataclasses import dataclass
-import numpy as np
 from typing import List, Tuple
-import tensorrt as trt
+
+import numpy as np
 import pycuda.driver as cuda
+import tensorrt as trt
 
 
 def load_engine(engine_file_path: str) -> trt.ICudaEngine:

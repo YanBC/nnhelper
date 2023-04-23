@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import tensorrt as trt
 from typing import List
 
+import tensorrt as trt
 
 TRT_LOGGER = trt.Logger(trt.Logger.WARNING)
 

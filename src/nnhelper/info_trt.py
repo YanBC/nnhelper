@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-from nnhelper.utils.trt_profile import query_profiles, load_engine
+
+from nnhelper.utils.trt_profile import load_engine, query_profiles
 
 
 def get_engine_info(engine_path: str) -> str:
