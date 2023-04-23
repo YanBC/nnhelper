@@ -1,6 +1,9 @@
 # Install
 ```bash
-pip install -v .
+pip install --upgrade pip
+pip install --upgrade pipx
+pipx ensurepath
+pipx install --verbose .
 ```
 
 # Command line tools
