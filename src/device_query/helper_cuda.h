@@ -737,6 +737,50 @@ inline const char* _ConvertSMVer2ArchName(int major, int minor) {
         major, minor, nGpuArchNameSM[index - 1].name);
     return nGpuArchNameSM[index - 1].name;
 }
+
+inline int _ConvertSMVer2MaxConcurrentKernels(int major, int minor) {
+    typedef struct {
+        int SM;  // 0xMm (hexidecimal notation), M = SM Major version,
+        // and m = SM minor version
+        int nKernels;
+    } sSMtoKernels;
+
+    sSMtoKernels nGpuArchNKernels[] = {
+        {0x50, 32},
+        {0x52, 32},
+        {0x53, 16},
+        {0x60, 128},
+        {0x61, 32},
+        {0x62, 16},
+        {0x70, 128},
+        {0x72, 16},
+        {0x75, 128},
+        {0x80, 128},
+        {0x86, 128},
+        {0x87, 128},
+        {0x89, 128},
+        {0x90, 128},
+        {-1, -1}
+    };
+
+    int index = 0;
+
+    while (nGpuArchNKernels[index].SM != -1) {
+        if (nGpuArchNKernels[index].SM == ((major << 4) + minor)) {
+            return nGpuArchNKernels[index].nKernels;
+        }
+
+        index++;
+    }
+
+    // If we don't find the values, we default use the previous one
+    // to run properly
+    printf(
+        "MapSMtoKernels for SM %d.%d is undefined."
+        "  Default to use %d\n",
+        major, minor, nGpuArchNKernels[index - 1].nKernels);
+    return nGpuArchNKernels[index - 1].nKernels;
+}
 // end of GPU Architecture definitions
 
 #ifdef __CUDA_RUNTIME_H__

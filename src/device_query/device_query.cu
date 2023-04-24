@@ -88,7 +88,7 @@ void print_general_info(cudaDeviceProp deviceProp) {
     const int description_len = 68;
     char *padded = (char *)malloc(sizeof(char) * (description_len + 1));
 
-    printf("%s (%s), ", deviceProp.name,
+    printf("  %s (%s), ", deviceProp.name,
            _ConvertSMVer2ArchName(deviceProp.major, deviceProp.minor));
     if (deviceProp.integrated == 1) {
         printf("integrated\n");
@@ -98,6 +98,9 @@ void print_general_info(cudaDeviceProp deviceProp) {
 
     pad_string(padded, "  CUDA Capability Major/Minor version number:", description_len);
     printf("%s%d.%d\n", padded, deviceProp.major, deviceProp.minor);
+
+    pad_string(padded, "  Maxinum number of concurrent kernels:", description_len);
+    printf("%s%d\n", padded, _ConvertSMVer2MaxConcurrentKernels(deviceProp.major, deviceProp.minor));
 
     printf("  (%03d) Multiprocessors, (%03d) CUDA Cores/MP:                        %d CUDA Cores\n",
            deviceProp.multiProcessorCount,
@@ -214,7 +217,7 @@ void print_programming_features(cudaDeviceProp deviceProp) {
     pad_string(padded, "  Total shared memory per multiprocessor:", description_len);
     printf("%s%ld bytes\n", padded, deviceProp.sharedMemPerMultiprocessor);
 
-    pad_string(padded, "  Max blocks per multiprocessor:", description_len);
+    pad_string(padded, "  Maximum number of blocks per multiprocessor:", description_len);
     printf("%s%d\n", padded, deviceProp.maxBlocksPerMultiProcessor);
 
     free(padded);
