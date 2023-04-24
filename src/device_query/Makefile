@@ -8,4 +8,4 @@ install: device_query
 	cp device_query ~/.local/bin
 
 device_query: device_query.cu
-	nvcc $(INCLUDES) -o device_query device_query.cu $(CFILES) -arch=compute_50
+	nvcc -w $(INCLUDES) -o device_query device_query.cu $(CFILES) -arch=compute_50
